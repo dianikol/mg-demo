@@ -1,0 +1,93 @@
+<div class="container">
+  <div class="row">
+    <a href="#" [routerLink]="['page-one']">page-one</a>
+    <a href="#" [routerLink]="['page-two']">page-two</a>
+  </div>
+  <div class="row">
+    <router-outlet></router-outlet>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <form [formGroup]="signUpForm" #form (ngSubmit)="onSubmit(form)" enctype="multipart/form-data">
+        <div formGroupName="userData">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              formControlName="username"
+              class="form-control">
+            <span
+              *ngIf="!signUpForm.get('userData.username').valid && signUpForm.get('userData.username').touched"
+              class="help-block">Please enter a valid username</span>
+          </div>
+          <div class="form-group">
+            <label for="email">email</label>
+            <input
+              type="text"
+              id="email"
+              formControlName="email"
+              class="form-control">
+            <span
+              *ngIf="!signUpForm.get('userData.email').valid && signUpForm.get('userData.email').touched"
+              class="help-block">Please enter a valid email address</span>
+          </div>
+        </div>
+        <div class="radio" *ngFor="let gender of genders">
+          <label>
+            <input
+              type="radio"
+              formControlName="gender"
+              [value]="gender">{{ gender }}
+          </label>
+        </div>
+        <div formArrayName="names">
+          <h4>Your names</h4>
+          <button class="btn btn-default" type="button" (click)="onAddHobby()">Add Hobby</button>
+          <button class="btn btn-default" type="button" (click)="reorder = !reorder">reorder</button>
+          <!--<table id="table-1" appSortable cellspacing="0" cellpadding="2">-->
+            <!--<tr id="1"><td>1</td><td>One</td><td>some text</td></tr>-->
+            <!--<tr id="2"><td>2</td><td>Two</td><td>some text</td></tr>-->
+            <!--<tr id="3"><td>3</td><td>Three</td><td>some text</td></tr>-->
+            <!--<tr id="4"><td>4</td><td>Four</td><td>some text</td></tr>-->
+            <!--<tr id="5"><td>5</td><td>Five</td><td>some text</td></tr>-->
+            <!--<tr id="6"><td>6</td><td>Six</td><td>some text</td></tr>-->
+            <!--<tr id="1"><td>1</td><td>One</td><td>some text</td></tr>-->
+            <!--<tr id="2"><td>2</td><td>Two</td><td>some text</td></tr>-->
+            <!--<tr id="3"><td>3</td><td>Three</td><td>some text</td></tr>-->
+
+          <!--</table>-->
+          <!--<ul [sortablejs]="allNames.controls" appSortable (beforeReorder)="onReorder($event)">-->
+          <a class="btn btn-primary" data-clipboard-text="Just because you can doesn't mean you should — clipboard.js">
+            Copy to clipboard
+          </a>
+          <table width="100%">
+            <tbody appSortable (beforeReorder)="onReorder($event)">
+            <tr [formGroupName]="i" id="{{i}}" class="ui-state-default" *ngFor="let name of allNames.controls; let i = index;">
+              <td class="instant">
+                  <div style="width:40px; height: 50px; background-color: #ccc;" >{{i}}</div>
+                  <div style="width:40px; height: 50px; background-color: red;" (click)="removeMe(i)">{{i}}</div>
+              </td>
+              <td [ngClass]="{'mini' : reorder}">
+                  <div appDropzone [token]="token" style="width: 100%; height: 100px; border: 1px solid #ccc; text-align: center; line-height: 100px;">Drag file</div>
+
+                  <input type="text" class="form-control" formControlName="fname">
+
+                  <input type="text" class="form-control" formControlName="lname">
+
+                <textarea [froalaEditor] id="" cols="30" rows="10" formControlName="descr"></textarea>
+
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <span
+          *ngIf="!signUpForm.valid && signUpForm.touched"
+          class="help-block">Please enter a valid data</span>
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+{
+  "/api/auth/admin/login": {
+    "target": "www2.axishairsalons.com",
+    "secure": false,
+    "logLevel": "debug"
+  }
+}
